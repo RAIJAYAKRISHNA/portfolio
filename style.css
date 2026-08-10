@@ -585,6 +585,8 @@ section {
 
 .about-image img {
     width: clamp(240px, 28vw, 300px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-radius: var(--border-radius);
     border: 1px solid var(--border);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
@@ -743,20 +745,11 @@ section {
     box-shadow: 0 10px 28px color-mix(in srgb, var(--skill-color) 35%, transparent);
 }
 
-.skill-percent {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--skill-color);
-    margin-bottom: 10px;
-    line-height: 1;
-}
-
 .skill-card i {
     font-size: 2rem;
     color: var(--skill-color);
-    margin-bottom: 10px;
+    margin-top: 6px;
+    margin-bottom: 12px;
     transition: transform var(--transition);
     position: relative;
 }
@@ -769,6 +762,132 @@ section {
     font-size: 0.9rem;
     font-weight: 600;
     position: relative;
+}
+
+/* ===========================
+   Experience Section
+=========================== */
+.experience-container {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.experience-card {
+    display: flex;
+    gap: 22px;
+    background: var(--bg-card);
+    backdrop-filter: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    padding: 30px 28px;
+    transition: var(--transition);
+}
+
+.experience-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 12px 32px var(--accent-glow);
+    transform: translateY(-4px);
+}
+
+.experience-icon {
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gradient-main);
+    box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.experience-icon i {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.experience-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px 16px;
+}
+
+.experience-content h3 {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-weight: 600;
+}
+
+.experience-content h4 {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+.experience-content .year {
+    white-space: nowrap;
+}
+
+.experience-desc {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    margin: 14px 0 12px;
+}
+
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.experience-list li {
+    position: relative;
+    padding-left: 20px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.55;
+}
+
+.experience-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gradient-main);
+}
+
+.experience-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    background: transparent;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--border-accent);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.experience-link:hover {
+    background: var(--gradient-main);
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 560px) {
+    .experience-card {
+        flex-direction: column;
+    }
 }
 
 /* ===========================
@@ -987,6 +1106,47 @@ section {
     color: var(--text-secondary);
     font-size: 0.925rem;
     line-height: 1.75;
+}
+
+.modal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.modal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.modal-link-github {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-accent);
+}
+
+.modal-link-github:hover {
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+.modal-link-demo {
+    background: var(--gradient-main);
+    color: white;
+    border: 1px solid transparent;
+}
+
+.modal-link-demo:hover {
+    filter: brightness(1.08);
+    transform: translateY(-2px);
 }
 
 /* ===========================

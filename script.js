@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initAOS();
     initNavigation();
     initScrollEffects();
-    initSkillPercentages();
+    initSkillColors();
     initSkillFilter();
     initStatCounters();
     initCopyEmail();
@@ -141,47 +141,13 @@ function initTheme() {
     });
 }
 
-function initSkillPercentages() {
+function initSkillColors() {
     const skillCards = document.querySelectorAll(".skill-card");
 
     skillCards.forEach(card => {
         const color = card.dataset.color;
         if (color) card.style.setProperty("--skill-color", color);
     });
-
-    const observer = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkillPercent(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        { threshold: 0.3 }
-    );
-
-    skillCards.forEach(card => observer.observe(card));
-}
-
-function animateSkillPercent(card) {
-    const target = parseInt(card.dataset.level, 10);
-    const el = card.querySelector(".skill-number");
-    if (!el || isNaN(target)) return;
-
-    const duration = 1200;
-    const start = performance.now();
-
-    function update(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.round(target * eased);
-
-        if (progress < 1) requestAnimationFrame(update);
-        else el.textContent = target;
-    }
-
-    requestAnimationFrame(update);
 }
 
 function initSkillFilter() {
@@ -198,11 +164,6 @@ function initSkillFilter() {
             skillCards.forEach(card => {
                 const match = filter === "all" || card.dataset.category === filter;
                 card.classList.toggle("hidden", !match);
-                if (match) {
-                    const num = card.querySelector(".skill-number");
-                    if (num) num.textContent = "0";
-                    animateSkillPercent(card);
-                }
             });
         });
     });
@@ -431,8 +392,16 @@ function initProjectModal() {
     const modalTag = modal.querySelector(".modal-tag");
     const modalTitle = modal.querySelector("#modal-title");
     const modalDesc = modal.querySelector(".modal-desc");
+    const modalGithub = modal.querySelector(".modal-link-github");
+    const modalDemo = modal.querySelector(".modal-link-demo");
 
     let lastFocused = null;
+
+    function setModalLink(linkEl, url) {
+        const hasLink = !!(url && url.trim() && !url.includes("PASTE_"));
+        linkEl.style.display = hasLink ? "inline-flex" : "none";
+        if (hasLink) linkEl.href = url;
+    }
 
     function openModal(card) {
         modalImg.src = card.dataset.image;
@@ -440,6 +409,8 @@ function initProjectModal() {
         modalTag.textContent = card.dataset.tag;
         modalTitle.textContent = card.dataset.title;
         modalDesc.textContent = card.dataset.desc;
+        setModalLink(modalGithub, card.dataset.github);
+        setModalLink(modalDemo, card.dataset.demo);
 
         lastFocused = document.activeElement;
         modal.hidden = false;
@@ -483,7 +454,7 @@ function initProjectModal() {
 function initTiltCards() {
     if (!window.matchMedia("(pointer: fine)").matches) return;
 
-    const cards = document.querySelectorAll(".project-card, .certificate-card, .stat-card");
+    const cards = document.querySelectorAll(".project-card, .certificate-card, .stat-card, .experience-card");
 
     cards.forEach(card => {
         card.addEventListener("mousemove", e => {
